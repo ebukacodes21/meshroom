@@ -9,6 +9,7 @@ def download_depth_results(s3, bucket, prefix, dest_dir):
     for page in paginator.paginate(Bucket=bucket, Prefix=prefix):
         for obj in page.get("Contents", []):
             key = obj["Key"]
+            # check ext.
             if key.endswith("_depth.png"):
                 local_path = Path(dest_dir) / Path(key).name
                 s3.download_file(bucket, key, str(local_path))
